@@ -12,19 +12,19 @@ class CustomButton extends StatelessWidget {
   VoidCallback onPress;
   @override
   Widget build(BuildContext context) {
-    return Material(
-      elevation: 5.0,
-      color: color,
-      borderRadius: BorderRadius.circular(30.0),
-      child: MaterialButton(
-        minWidth: 200.0,
-        height: 42.0,
-        onPressed: () {
-          onPress;
-        },
-        child: Text(
-          name,
+    return ElevatedButton(
+      onPressed: onPress,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: color,
+        elevation: 5,
+        minimumSize: const Size(200, 50),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
         ),
+      ),
+      child: Text(
+        name,
+        style: const TextStyle(color: Colors.white),
       ),
     );
   }

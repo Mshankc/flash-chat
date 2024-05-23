@@ -51,7 +51,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 onPress: () {
                   Navigator.pushNamed(context, LoginScreen.id);
                 },
-                color: Colors.blue,
+                color: Colors.lightBlueAccent,
               ),
             ),
             Padding(
@@ -61,7 +61,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 onPress: () {
                   Navigator.pushNamed(context, RegistrationScreen.id);
                 },
-                color: Colors.purple,
+                color: Colors.blueAccent,
               ),
             ),
           ],
