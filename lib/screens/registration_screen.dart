@@ -1,6 +1,7 @@
 import 'package:flash_chat/widgets/custom_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -21,9 +22,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
-              height: 200.0,
-              child: Image.asset('images/logo.png'),
+            Hero(
+              tag: 'logo',
+              child: Container(
+                height: 200.0,
+                child: Image.asset('images/logo.png'),
+              ),
             ),
             const SizedBox(
               height: 48.0,
@@ -80,12 +84,6 @@ class CustomTextField extends StatelessWidget {
       },
       decoration: InputDecoration(
         hintText: hintText,
-        suffix: IconButton(
-          onPressed: () {
-            onTap;
-          },
-          icon: icon,
-        ),
         contentPadding:
             const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
         border: const OutlineInputBorder(
