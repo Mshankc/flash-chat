@@ -1,7 +1,6 @@
+import 'package:flash_chat/constants.dart';
 import 'package:flash_chat/widgets/custom_button.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -32,22 +31,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             const SizedBox(
               height: 48.0,
             ),
-            CustomTextField(
-              hintText: 'Enter email id',
-              onPress: () {},
-              isObscure: false,
-              icon: const Icon(null),
-              onTap: () {},
+            TextField(
+              decoration:
+                  kTextFieldDecoration.copyWith(hintText: 'Enter your Email'),
             ),
             const SizedBox(
               height: 8.0,
             ),
-            CustomTextField(
-              hintText: 'Enter Password',
-              onPress: () {},
-              isObscure: true,
-              icon: const Icon(Icons.remove_red_eye),
-              onTap: () {},
+            TextField(
+              decoration:
+                  kTextFieldDecoration.copyWith(hintText: 'Enter you password'),
             ),
             const SizedBox(
               height: 24.0,
@@ -62,26 +55,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 }
 
 class CustomTextField extends StatelessWidget {
-  CustomTextField({
+  const CustomTextField({
     super.key,
     required this.hintText,
     required this.onPress,
     required this.isObscure,
     required this.icon,
-    required this.onTap,
   });
   final String hintText;
-  VoidCallback onPress, onTap;
-  Icon icon;
-  bool isObscure;
+  final VoidCallback onPress;
+  final Icon icon;
+  final bool isObscure;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       obscureText: isObscure,
-      onChanged: (value) {
-        onPress;
-      },
       decoration: InputDecoration(
         hintText: hintText,
         contentPadding:
