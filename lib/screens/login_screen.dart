@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/constants.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flash_chat/screens/chat_screen.dart';
+import 'package:flash_chat/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -11,6 +13,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _auth = FirebaseAuth.instance;
+  String email = '';
+  String password = '';
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,9 +40,10 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             TextField(
               onChanged: (value) {
-                //Do something with the user input.
+                email = value;
               },
               keyboardType: TextInputType.emailAddress,
+              controller: emailController,
               decoration:
                   kTextFieldDecoration.copyWith(hintText: 'Enter your email'),
             ),
@@ -44,9 +52,10 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             TextField(
               onChanged: (value) {
-                //Do something with the user input.
+                password = value;
               },
               obscureText: true,
+              controller: passwordController,
               decoration: kTextFieldDecoration.copyWith(
                   hintText: 'Enter your Password'),
             ),
@@ -55,21 +64,24 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: Material(
-                color: Colors.lightBlueAccent,
-                borderRadius: const BorderRadius.all(Radius.circular(30.0)),
-                elevation: 5.0,
-                child: MaterialButton(
-                  onPressed: () {
-                    //Implement login functionality.
+              child: CustomButton(
+                  name: 'Log In',
+                  onPress: () async {
+                    {
+                      try {
+                        final user = await _auth.signInWithEmailAndPassword(
+                            email: email, password: password);
+                        if (user != null) {
+                          Navigator.pushNamed(context, ChatScreen.id);
+                        }
+                        emailController.clear();
+                        passwordController.clear();
+                      } catch (e) {
+                        print(e);
+                      }
+                    }
                   },
-                  minWidth: 200.0,
-                  height: 42.0,
-                  child: const Text(
-                    'Log In',
-                  ),
-                ),
-              ),
+                  color: Colors.lightBlueAccent),
             ),
           ],
         ),
