@@ -1,4 +1,4 @@
-import 'package:flash_chat/constants.dart';
+import 'package:flash_chat/constants/constants.dart';
 import 'package:flash_chat/screens/chat_screen.dart';
 import 'package:flash_chat/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +10,7 @@ class RegistrationScreen extends StatefulWidget {
   static const String id = 'registration_screen';
 
   @override
+  // ignore: library_private_types_in_public_api
   _RegistrationScreenState createState() => _RegistrationScreenState();
 }
 
@@ -32,7 +33,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             children: <Widget>[
               Hero(
                 tag: 'logo',
-                child: Container(
+                child: SizedBox(
                   height: 200.0,
                   child: Image.asset('images/logo.png'),
                 ),
