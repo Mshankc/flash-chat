@@ -49,6 +49,7 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
+  TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,6 +100,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 children: <Widget>[
                   Expanded(
                     child: TextField(
+                      controller: controller,
                       onChanged: (value) {
                         message = value;
                       },
@@ -112,6 +114,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         'sender': loggedInUser.email,
                         'timestamp': FieldValue.serverTimestamp(),
                       });
+                      controller.clear();
                     },
                     child: const Text(
                       'Send',
