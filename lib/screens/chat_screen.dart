@@ -74,21 +74,23 @@ class _ChatScreenState extends State<ChatScreen> {
             StreamBuilder<QuerySnapshot>(
                 stream: _firestore.collection('messages').snapshots(),
                 builder: (context, snapshot) {
-                  List<Text> messageWidgets = [];
-                  if (snapshot.hasData) {
-                    final messages = snapshot.data?.docs;
-
-                    for (var message in messages!) {
-                      final messageData =
-                          message.data()! as Map<String, dynamic>;
-                      final messageText = messageData['text'];
-                      final messageSender = messageData['sender'];
-                      final messageWidget =
-                          Text('$messageText from $messageSender');
-                      messageWidgets.add(messageWidget);
-                    }
+                  List<MessageContainer> messageWidgets = [];
+                  if (!snapshot.hasData) {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.blue,
+                      ),
+                    );
                   }
-                  return Column(children: messageWidgets);
+                  final messages = snapshot.data!.docs;
+                  for (var message in messages) {
+                    final messageText = message.get('text');
+                    final messageSender = message.get('sender');
+                    final messageWidget = MessageContainer(
+                        text: messageText, sender: messageSender);
+                    messageWidgets.add(messageWidget);
+                  }
+                  return Expanded(child: ListView(children: messageWidgets));
                 }),
             Container(
               decoration: kMessageContainerDecoration,
@@ -122,6 +124,47 @@ class _ChatScreenState extends State<ChatScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class MessageContainer extends StatelessWidget {
+  const MessageContainer({
+    super.key,
+    required this.text,
+    required this.sender,
+  });
+  final String text;
+  final String sender;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          child: Text(
+            sender,
+            style: const TextStyle(color: Colors.grey, fontSize: 10),
+          ),
+        ),
+        Material(
+          borderRadius: BorderRadius.circular(30),
+          color: Colors.blue,
+          elevation: 5,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Text(
+              text,
+              style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
