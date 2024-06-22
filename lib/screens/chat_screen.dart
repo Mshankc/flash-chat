@@ -33,11 +33,19 @@ class _ChatScreenState extends State<ChatScreen> {
       print(e);
     }
   }
+  //
+  // void getMessages() async {
+  //   final messageReplies = await _firestore.collection('messages').get();
+  //   for (var message in messageReplies.docs) {
+  //     print(message.data());
+  //   }
+  // }
 
-  void getMessages() async {
-    final messageReplies = await _firestore.collection('messages').get();
-    for (var message in messageReplies.docs) {
-      print(message.data());
+  void getMessageStream() async {
+    await for (var snapshot in _firestore.collection('messages').snapshots()) {
+      for (var message in snapshot.docs) {
+        print(message.data());
+      }
     }
   }
 
@@ -50,7 +58,7 @@ class _ChatScreenState extends State<ChatScreen> {
           IconButton(
               icon: const Icon(Icons.close),
               onPressed: () {
-                getMessages();
+                getMessageStream();
                 // _auth.signOut();
                 // Navigator.pop(context);
               }),
