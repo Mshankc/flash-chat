@@ -6,17 +6,16 @@ class MessageContainer extends StatelessWidget {
     required this.text,
     required this.sender,
     required this.isMe,
-    required this.color,
   });
   final String text;
   final String sender;
   final bool isMe;
-  final Color color;
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment:
+          isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 16),
@@ -28,20 +27,25 @@ class MessageContainer extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(right: 1.0),
           child: Material(
-            borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
-                topLeft: Radius.circular(30)),
-            color: color,
+            borderRadius: isMe
+                ? BorderRadius.only(
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30),
+                    topLeft: Radius.circular(30))
+                : BorderRadius.only(
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30),
+                    topRight: Radius.circular(30)),
+            color: isMe ? Colors.blue : Colors.white,
             elevation: 5,
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Text(
                 text,
-                style: const TextStyle(
+                style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: Colors.white),
+                    color: isMe ? Colors.white : Colors.black),
               ),
             ),
           ),
